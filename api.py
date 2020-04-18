@@ -49,8 +49,10 @@ title=[x for x in list(list(get_json[1])[0])]
 
 #value_frame=pd.DataFrame(value,columns=title)
 value_frame=pd.DataFrame(list(get_json[1]))
-#value_frame=value_frame.set_index("Country/other",inplace=True)
+value_frame=value_frame.set_index("Country/other",inplace=False)
+
 if st.checkbox('Show data in table'):
+    #st.dataframe(value_frame)
     st.dataframe(value_frame.style.highlight_max(axis=0))
 
 if st.checkbox('show chart'):
@@ -65,8 +67,8 @@ if st.checkbox('show chart'):
 '''
 options = st.multiselect(
         'Select',
-         value_frame['Country/other']
+         value_frame.index
         )
 
-st.dataframe(value_frame[options])
+st.table(value_frame.loc[options])
 
