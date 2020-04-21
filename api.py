@@ -2,40 +2,58 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
+import datetime
 
 
 '''
 # apicovid2019
 
-**Fetch api from github**
 
-## methods
-- fetch entire data
-- fetch data by country
-- fetch data by continent
-:sunglasses:
+**Fetch apicovid2019 from github**
+
+*This is a usecase of the apicovid2019 from
+[Azwyane](https://github.com/azwyane/apicovid2019)*
+
+# Built with streamlit with :heart:
+
+- To view latest data please goto the **_right side_** 
+panel and hit clear cache and re-run which would fetch
+the latest data and display the response in you desired 
+view.
+
+- To view the data individually either by country or continent
+please refer to the **_left side_** panel and make your choices.
+
+## Fetch data :sunglasses:
 '''
+
+
 @st.cache
 def get_data():
-    return requests.get("https://apicovid2019.azurewebsites.net")
+    return (requests.get("https://apicovid2019.azurewebsites.net"),datetime.datetime.now())
 
-get=get_data()
+st.spinner('Fetching latest data')
+get,time=get_data()
+st.success(f"Fetched latest data at {time}, server time NP.")
 get_json=get.json()
 
-if st.checkbox('Show json data'):
-    st.json(get_json) #writes raw data to screen commented for now
 
-#st.table(get_json)
 first_index=list(get_json[0])
 second_index=list(get_json[1])
 ttile=list(second_index[0])
 third_index=list(get_json[2])
+
+f'''
+# WORLWIDE CASES:
+###   Total Coronavirus Cases:{((get_json[0])[first_index[0]])}
+###   Total Worldwide Deaths :{((get_json[0])[first_index[1]])}
+###   Total Recovered        :{((get_json[0])[first_index[2]])}
+'''
+
+
+#st.table(get_json)
 #st.table(ttile)
 #st.write(ttile)
-
-st.write(first_index[0],(get_json[0])[first_index[0]])
-st.write(first_index[1],(get_json[0])[first_index[1]])
-st.write(first_index[2],(get_json[0])[first_index[2]])
 
 
 #st.write(list(get_json[1]))
@@ -43,20 +61,15 @@ value=[]
 title=[x for x in list(list(get_json[1])[0])]
 
 
-#for j in list(get_json[1]):
-#   data=[j[i] for i in title ]
-#   value.append(data)
-
 #value_frame=pd.DataFrame(value,columns=title)
 value_frame=pd.DataFrame(list(get_json[1]))
 value_frame=value_frame.set_index("Country/other",inplace=False)
 
-if st.checkbox('Show data in table'):
-    #st.dataframe(value_frame)
+if st.checkbox('View worldwide data in table'):
     st.dataframe(value_frame.style.highlight_max(axis=0))
 
-if st.checkbox('show chart'):
-    st.bar_chart(value_frame)
+#if st.checkbox('show chart'):
+#    st.bar_chart(value_frame)
 
 
 #'checking',np.histogram(value_frame['TotalCases'],bin=24,range=(0,24))[0]
@@ -65,10 +78,63 @@ if st.checkbox('show chart'):
 '''
 ## VIEW INDIVIDUALLY :smile:
 '''
-options = st.multiselect(
-        'Select',
-         value_frame.index
-        )
+
+options = st.sidebar.selectbox(
+    'Select the country to view',
+    value_frame.index)
+#options = st.multiselect(
+#        'Select',
+#         value_frame.index
+#        )
+
+#my_placeholder = st.empty()
+#my_placeholder.table(value_frame.loc[options])
 
 st.table(value_frame.loc[options])
+
+#this gives the transpose of the dataframe
+transpose=value_frame.T
+column=[x for x in value_frame.columns]
+#column
+first=value_frame["TotalCases"]
+first=first.T
+#first
+
+drops=value_frame.drop(columns=[
+  "NewCases",
+  "NewDeaths",
+  "ActiveCases",
+  "Serious",
+  "Totalcases/1Mpop",
+  "Deaths/1Mpop",
+  "TotalTests",
+  "Tests/1Mpop"
+])
+
+if st.checkbox('show'):
+    st.bar_chart(drops.convert_dtypes(),use_container_width=False)
+
+if st.checkbox('show total cases peak'):
+    st.line_chart(value_frame['TotalCases'],width=0,height=0,use_container_width=False)
+
+if st.checkbox('show total deaths peak'):
+    st.line_chart(value_frame['TotalDeaths'],width=0,height=0,use_container_width=False)
+
+
+if st.checkbox('show total recovered peak'):
+    st.line_chart(value_frame['TotalRecovered'],width=0,height=0,use_container_width=False)
+
+'''
+# For Developers
+
+Those who are willing to view the response format of the api used in this
+project can view which is:
+
+If you are interested in using the api then 
+go visit *[Azwyane](https://github.com/azwyane/apicovid2019)*
+for more info and documentation.
+'''
+
+if st.checkbox('Show json data'):
+    st.json(get_json) #writes raw data to screen commented for now
 
