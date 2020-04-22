@@ -24,7 +24,7 @@ view.
 - To view the data individually either by country or continent
 please refer to the **_left side_** panel and make your choices.
 
-## Fetch data :sunglasses:
+## Fetch entire data :zap:
 '''
 
 
@@ -50,12 +50,6 @@ f'''
 ###   Total Recovered        :{((get_json[0])[first_index[2]])}
 '''
 
-
-#st.table(get_json)
-#st.table(ttile)
-#st.write(ttile)
-
-
 #st.write(list(get_json[1]))
 value=[]
 title=[x for x in list(list(get_json[1])[0])]
@@ -68,13 +62,6 @@ value_frame=value_frame.set_index("Country/other",inplace=False)
 if st.checkbox('View worldwide data in table'):
     st.dataframe(value_frame.style.highlight_max(axis=0))
 
-#if st.checkbox('show chart'):
-#    st.bar_chart(value_frame)
-
-
-#'checking',np.histogram(value_frame['TotalCases'],bin=24,range=(0,24))[0]
-
-#value_frame['Country/other']
 '''
 ## VIEW INDIVIDUALLY :smile:
 '''
@@ -111,7 +98,7 @@ drops=value_frame.drop(columns=[
   "Tests/1Mpop"
 ])
 
-if st.checkbox('show'):
+if st.checkbox('show cases,deaths,recoveries in same chart'):
     st.bar_chart(drops.convert_dtypes(),use_container_width=False)
 
 if st.checkbox('show total cases peak'):
@@ -125,16 +112,34 @@ if st.checkbox('show total recovered peak'):
     st.line_chart(value_frame['TotalRecovered'],width=0,height=0,use_container_width=False)
 
 '''
+# view cases per continent
+'''
+v_frame=pd.DataFrame(list(get_json[2]))
+v_frame=v_frame.set_index("Country/other",inplace=False)
+v_frame=v_frame.drop(columns=[
+  "Totalcases/1Mpop",
+  "Deaths/1Mpop",
+  "TotalTests",
+  "Tests/1Mpop"
+])
+
+if st.checkbox('View continent data in table'):
+    st.table(v_frame.style.highlight_max(axis=0))
+
+
+
+'''
 # For Developers
 
 Those who are willing to view the response format of the api used in this
 project can view which is:
-
+'''
+if st.checkbox('Show json data'):
+    st.json(get_json) #writes raw data to screen commented for now
+'''
 If you are interested in using the api then 
 go visit *[Azwyane](https://github.com/azwyane/apicovid2019)*
 for more info and documentation.
 '''
 
-if st.checkbox('Show json data'):
-    st.json(get_json) #writes raw data to screen commented for now
 
