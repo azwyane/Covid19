@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-import numpy as np
+#import numpy as np
 import pandas as pd
 import datetime
 
