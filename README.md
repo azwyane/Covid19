@@ -13,6 +13,7 @@
 - [Features](#Features)
 - [Contributing](#Contributing)
 
+![Covid19 Demo](media/api.gif)
 
 ## Installation 
 
