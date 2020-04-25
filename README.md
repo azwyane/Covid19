@@ -4,7 +4,6 @@
 
 > extracted from [apicovid2019](https://github.com/azwyane/apicovid2019)
 
-> include terms/tags that can be searched
 
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) 
 
