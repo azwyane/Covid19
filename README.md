@@ -10,14 +10,14 @@
 
 ## Table of Contents (Optional)
 
-- [Installation](#installation)
-- [Features](#features)
-- [Contributing](#contributing)
+- [Installation](#Installation)
+- [Features](#Features)
+- [Contributing](#Contributing)
 
 
-## Installation 🚀&nbsp;
+## Installation 
 
-To install in your local machine follow the steps below:
+🚀&nbsp; To install in your local machine follow the steps below:
 
 ### Clone
 
@@ -65,8 +65,9 @@ python3 -m venv venv
 > Clone the repo and create a app in your Heroku account and push the repo 
 > in your app.
 
-## Features ❤️&nbsp; 
-
+## Features
+ 
+❤️&nbsp; 
 > It is a side project of making use of apicovid2019. It has feature of 
 > displaying data in tabular form, show line graph of present covid cases
 > around the world and also one can view specific data easily in much 
@@ -75,7 +76,9 @@ python3 -m venv venv
 
 ---
 
-## Contributing 🤝&nbsp;
+## Contributing 
+
+🤝&nbsp;
 
 > To get started...
 
@@ -85,7 +88,7 @@ python3 -m venv venv
     - 🍴 Fork this repo!
 
 - **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/joanaz/HireDot2.git`
+    - 👯 Clone this repo to your local machine using `https://github.com/azwyane/Covid19.git`
 
 ### Step 2
 
