@@ -15,7 +15,7 @@
 - [Contributing](#contributing)
 
 
-## 🚀&nbsp; Installation
+## Installation 🚀&nbsp;
 
 To install in your local machine follow the steps below:
 
@@ -65,7 +65,7 @@ python3 -m venv venv
 > Clone the repo and create a app in your Heroku account and push the repo 
 > in your app.
 
-## ❤️&nbsp; Features
+## Features ❤️&nbsp; 
 
 > It is a side project of making use of apicovid2019. It has feature of 
 > displaying data in tabular form, show line graph of present covid cases
@@ -75,7 +75,7 @@ python3 -m venv venv
 
 ---
 
-## 🤝&nbsp; Contributing
+## Contributing 🤝&nbsp;
 
 > To get started...
 
