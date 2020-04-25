@@ -4,7 +4,6 @@ import requests
 import pandas as pd
 import datetime
 
-
 '''
 # apicovid2019
 
@@ -14,19 +13,8 @@ import datetime
 *This is a usecase of the apicovid2019 from
 [Azwyane](https://github.com/azwyane/apicovid2019)*
 
-# Built with streamlit with :heart:
-
-- To view latest data please goto the **_right side_** 
-panel and hit clear cache and re-run which would fetch
-the latest data and display the response in you desired 
-view.
-
-- To view the data individually either by country or continent
-please refer to the **_left side_** panel and make your choices.
-
 ## Fetch entire data :zap:
 '''
-
 
 @st.cache
 def get_data():
@@ -37,94 +25,117 @@ get,time=get_data()
 st.success(f"Fetched latest data at {time}, server time NP.")
 get_json=get.json()
 
+page=st.sidebar.selectbox("Navigate",["Home","View Specific Data"])
 
-first_index=list(get_json[0])
-second_index=list(get_json[1])
-ttile=list(second_index[0])
-third_index=list(get_json[2])
+if page=="Home":
+    
+    '''
+    # Built with streamlit with :heart:
 
-f'''
-# WORLWIDE CASES:
-###   Total Coronavirus Cases:{((get_json[0])[first_index[0]])}
-###   Total Worldwide Deaths :{((get_json[0])[first_index[1]])}
-###   Total Recovered        :{((get_json[0])[first_index[2]])}
-'''
+    - To view latest data please goto the **_right side_** 
+    panel and hit clear cache and re-run which would fetch
+    the latest data and display the response in you desired 
+    view.
 
-#st.write(list(get_json[1]))
-value=[]
-title=[x for x in list(list(get_json[1])[0])]
+    - To view the data individually either by country or continent
+    please refer to the **_left side_** panel and make your choices.
 
-
-#value_frame=pd.DataFrame(value,columns=title)
-value_frame=pd.DataFrame(list(get_json[1]))
-value_frame=value_frame.set_index("Country/other",inplace=False)
-
-if st.checkbox('View worldwide data in table'):
-    st.dataframe(value_frame.style.highlight_max(axis=0))
-
-'''
-## VIEW INDIVIDUALLY :smile:
-'''
-
-options = st.sidebar.selectbox(
-    'Select the country to view',
-    value_frame.index)
-#options = st.multiselect(
-#        'Select',
-#         value_frame.index
-#        )
-
-#my_placeholder = st.empty()
-#my_placeholder.table(value_frame.loc[options])
-
-st.table(value_frame.loc[options])
-
-#this gives the transpose of the dataframe
-transpose=value_frame.T
-column=[x for x in value_frame.columns]
-#column
-first=value_frame["TotalCases"]
-first=first.T
-#first
-
-drops=value_frame.drop(columns=[
-  "NewCases",
-  "NewDeaths",
-  "ActiveCases",
-  "Serious",
-  "Totalcases/1Mpop",
-  "Deaths/1Mpop",
-  "TotalTests",
-  "Tests/1Mpop"
-])
-
-if st.checkbox('show cases,deaths,recoveries in same chart'):
-    st.bar_chart(drops.convert_dtypes(),use_container_width=False)
-
-if st.checkbox('show total cases peak'):
-    st.line_chart(value_frame['TotalCases'],width=0,height=0,use_container_width=False)
-
-if st.checkbox('show total deaths peak'):
-    st.line_chart(value_frame['TotalDeaths'],width=0,height=0,use_container_width=False)
+    '''
 
 
-if st.checkbox('show total recovered peak'):
-    st.line_chart(value_frame['TotalRecovered'],width=0,height=0,use_container_width=False)
 
-'''
-# view cases per continent
-'''
-v_frame=pd.DataFrame(list(get_json[2]))
-v_frame=v_frame.set_index("Country/other",inplace=False)
-v_frame=v_frame.drop(columns=[
-  "Totalcases/1Mpop",
-  "Deaths/1Mpop",
-  "TotalTests",
-  "Tests/1Mpop"
-])
 
-if st.checkbox('View continent data in table'):
-    st.table(v_frame.style.highlight_max(axis=0))
+
+
+    first_index=list(get_json[0])
+    second_index=list(get_json[1])
+    ttile=list(second_index[0])
+    third_index=list(get_json[2])
+
+    f'''
+    # WORLWIDE CASES:
+    ###   Total Coronavirus Cases:{((get_json[0])[first_index[0]])}
+    ###   Total Worldwide Deaths :{((get_json[0])[first_index[1]])}
+    ###   Total Recovered        :{((get_json[0])[first_index[2]])}
+    '''
+
+    #st.write(list(get_json[1]))
+    value=[]
+    title=[x for x in list(list(get_json[1])[0])]
+
+
+    #value_frame=pd.DataFrame(value,columns=title)
+    value_frame=pd.DataFrame(list(get_json[1]))
+    value_frame=value_frame.set_index("Country/other",inplace=False)
+    value_frame=value_frame.replace({"None":0,"":0})
+    #if st.checkbox('View worldwide data in table'):
+    #    st.dataframe(value_frame.style.highlight_max(axis=0))
+    st.dataframe(value_frame,width=100000)
+
+    drops=value_frame.drop(columns=[
+        "NewCases",
+        "NewDeaths",
+        "ActiveCases",
+        "Serious",
+        "Totalcases/1Mpop",
+        "Deaths/1Mpop",
+        "TotalTests",
+        "Tests/1Mpop"
+        ])
+
+    if st.checkbox('show cases,deaths,recoveries in same chart'):
+        st.bar_chart(drops.convert_dtypes(),use_container_width=False)
+else:
+    value_frame=pd.DataFrame(list(get_json[1]))
+    value_frame=value_frame.set_index("Country/other",inplace=False)
+    value_frame=value_frame.replace({"None":0,"":0})
+
+    pageSecond=st.sidebar.selectbox("viewing",["CountrySpecific","Continents"])
+    
+    if pageSecond=="CountrySpecific":
+        
+        '''
+        ## VIEWING INDIVIDUALLY 
+        '''
+
+        options = st.sidebar.selectbox(
+            'Select the country to view',
+            value_frame.index)
+        #options = st.multiselect(
+        #        'Select',
+        #         value_frame.index
+        #        )
+
+        #my_placeholder = st.empty()
+        #my_placeholder.table(value_frame.loc[options])
+
+        st.table(value_frame.loc[options])
+
+        #this gives the transpose of the dataframe
+        transpose=value_frame.T
+        column=[x for x in value_frame.columns]
+        #column
+        first=value_frame["TotalCases"]
+        first=first.T
+        #first
+
+        
+    else:
+        
+        '''
+        # view cases per continent
+        '''
+        v_frame=pd.DataFrame(list(get_json[2]))
+        v_frame=v_frame.set_index("Country/other",inplace=False)
+        v_frame=v_frame.drop(columns=[
+        "Totalcases/1Mpop",
+        "Deaths/1Mpop",
+        "TotalTests",
+        "Tests/1Mpop"
+        ])
+
+        if st.checkbox('View continent data in table'):
+            st.table(v_frame.style.highlight_max(axis=0))
 
 
 
