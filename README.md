@@ -5,7 +5,7 @@
 > extracted from [apicovid2019](https://github.com/azwyane/apicovid2019)
 
 
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) 
+[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://github.com/azwyane/Covid19.git) 
 
 ## Table of Contents (Optional)
 
