@@ -55,8 +55,8 @@ if page=="Home":
     f'''
     # WORLWIDE CASES:
     ###   Total Coronavirus Cases:{((get_json[0])[first_index[0]])}
-    ###   Total Worldwide Deaths :{((get_json[0])[first_index[1]])}
-    ###   Total Recovered        :{((get_json[0])[first_index[2]])}
+    ###   Total Worldwide Deaths :{((get_json[0])[first_index[2]])}
+    ###   Total Recovered        :{((get_json[0])[first_index[4]])}
     '''
 
     #st.write(list(get_json[1]))
